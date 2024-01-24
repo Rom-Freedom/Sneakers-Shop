@@ -2,18 +2,18 @@
 import Card from './Card.vue'
 
 const onClickAdd = () => {
-    alert('Add');
+    alert('Добавить');
 }
 </script>
 
 <template>
     <div class="grid grid-cols-4 gap-5">
         <Card title="Мужские кроссовки Nike Blazer Mid Suede"
-        imageUrl="/sneakers/sneakers-1.jpg"
-        :price="5000"
-        :is-favorite="true"
-        :onClickAdd="onClickAdd"
-        :isAdded="true"
+            imageUrl="/sneakers/sneakers-1.jpg"
+            :price="5000"
+            :is-favorite="true"
+            :onClickAdd="onClickAdd"
+            :isAdded="true"
         />
     </div>
 </template>
