@@ -3,12 +3,10 @@
 </script>
 
 <template>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col flex-1 gap-4 justify-between">
         <CartItem />
         <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        
         
     </div>
 </template>
