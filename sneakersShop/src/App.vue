@@ -1,22 +1,48 @@
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, reactive, watch } from 'vue'
   import axios from 'axios'
   import Header from './components/Header.vue'
   import CardList from './components/CardList.vue'
   import Drawer from './components/Drawer.vue'
   
-  const items = ref([]);
+  const items = ref([])
 
-  onMounted(async () => {
+  const filters = reactive ({
+    sortBy: 'title',
+    searchQuery: '',
+  });
+
+  const onChangeSelect = (event) => {
+    filters.sortBy = event.target.value;
+  }
+
+  const onChangeSearchInput = (event) => {
+    filters.searchQuery = event.target.value
+  }
+
+  const fetchItems = async () => {
     try {
-      const {data} = await axios.get('https://604781a0efa572c1.mokky.dev/items')
+      const params = {
+        sortBy: filters.sortBy,
+      }
+
+      if (filters.searchQuery) {
+        params.title = `*${filters.searchQuery}*`;
+      }
+
+      const {data} = await axios.get(`https://604781a0efa572c1.mokky.dev/items`, {
+        params
+      })
 
       items.value = data;
       console.log(data)
     } catch (err) {
       console.log(err)
     }
-  });
+  }
+
+  onMounted(fetchItems)
+  watch(filters, fetchItems)
 </script>
 
 <template>
@@ -29,19 +55,22 @@
         <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
 
         <div class="flex gap-4">
-          <select class="py-2 px-3 border rounded-md outline-none">
-          <option>По названию</option>
-          <option>По цене (дешевые)</option>
-          <option>По цене (дорогие)</option>
+          <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
+          <option value="name">По названию</option>
+          <option value="price">По цене (дешевые)</option>
+          <option value="-price">По цене (дорогие)</option>
         </select>
 
         <div class="relative">
           <img class="absolute left-4 top-3" src="/search.svg" alt="Search">
-          <input class="border rounded-md py-2 pl-11 pr-4
-          outline-none
-          focus:border-gray-400"
-          type="text"
-          placeholder="Поиск...">
+          <input
+            @input="onChangeSearchInput"
+            class="border rounded-md py-2 pl-11 pr-4
+            outline-none
+            focus:border-gray-400"
+            type="text"
+            placeholder="Поиск..." 
+          />
         </div>
         </div>
       </div>
