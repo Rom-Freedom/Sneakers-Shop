@@ -23,17 +23,25 @@
     searchQuery: '',
   })
 
+  const addToCart = (item) => {
+    cart.value.push(item)
+    item.isAdded = true
+  }
+
+  const removeFromCart = (item) => {
+    cart.value.splice(cart.value.indexOf(item), 1)
+    item.isAdded = false
+  }
+
   const onChangeSelect = (event) => {
     filters.sortBy = event.target.value;
   }
 
-  const addToCart = (item) => {
+  const onClickAddCartPlus = (item) => {
     if (!item.isAdded) {
-      cart.value.push(item)
-      item.isAdded = true
+      addToCart(item)
     } else {
-      cart.value.splice(cart.value.indexOf(item), 1)
-      item.isAdded = false
+      removeFromCart(item)
     }
     console.log(cart)
   }
@@ -123,7 +131,9 @@
   provide('cart', {
     cart,
     closeDrawer,
-    openDrawer
+    openDrawer,
+    addToCart,
+    removeFromCart
   })
 </script>
 
@@ -159,7 +169,7 @@
       </div>
 
       <div class="mt-10">
-        <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="addToCart"/>
+        <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddCartPlus"/>
       </div>
     </div>
 
