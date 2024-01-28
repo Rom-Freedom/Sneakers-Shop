@@ -1,6 +1,7 @@
 <script setup>
 import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
+import InfoBlock from './InfoBlock.vue'
 
 const emit = defineEmits(['createOrder'])
 
@@ -17,6 +18,9 @@ const props = defineProps({
     <div class="fixed top-0 left-0 h-full w-full bg-black z-10 opacity-70"></div>
     <div class="bg-white w-96 h-full fixed right-0 top-0 z-20 p-8"> 
         <DrawerHead />
+
+        <InfoBlock title="Корзина" description="Добавьте хотя бы одну пару кроссовок чтобы сделать заказ" image-url="/package-icon.png" />
+
         <CartItemList />
 
         <div class="flex flex-col gap-4 mt-7">
