@@ -156,6 +156,13 @@
   })
   watch(filters, fetchItems)
 
+  watch(cart, () => {
+    items.value = items.value.map((items) => ({
+      ...items,
+      isAdded: false
+    }))
+  })
+
   provide('cart', {
     cart,
     closeDrawer,
